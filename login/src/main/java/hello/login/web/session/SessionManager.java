@@ -27,10 +27,10 @@ public class SessionManager {
     public void createSession(Object value, HttpServletResponse response){
         //세션 id를 생성하고, 값을 세션에 저장
         String sessionId = UUID.randomUUID().toString();
-        
+
         sessionStore.put(sessionId, value);
-        
-        
+
+
         //쿠키 생성
         Cookie mySessionCookie = new Cookie(SESSION_COOKIE_NAME, sessionId);
         response.addCookie(mySessionCookie);
@@ -66,4 +66,17 @@ public class SessionManager {
                 .findAny()
                 .orElse(null);
     }
+    // 위의 코드는 아래의 코드를 리팩토링 한 것이다.
+    //    public Object getSession(HttpServletRequest request){
+//        Cookie[] cookies = request.getCookies();// 배열로 반환됨
+//        if (cookies == null){
+//            return null;
+//        }
+//        for(Cookie cookie : cookies){
+//            if(cookie.getName().equals(SESSION_COOKIE_NAME)){
+//                return sessionStore.get(cookie.getValue());
+//            }
+//        }
+//        return null;
+//    }
 }
